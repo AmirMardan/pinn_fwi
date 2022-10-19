@@ -1,0 +1,4 @@
+PyFWI
+pyopencl
+deepwave
+segyio
