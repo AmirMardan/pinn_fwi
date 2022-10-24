@@ -38,8 +38,8 @@ scheduler_autoencoder = torch.optim.lr_scheduler.StepLR(optim_autoencoder, 30, g
 all_loss = []
 
 for iter in range(ITERATION):
-    loss, m = train_fun(Physics=Physics, autoencoder=autoencoder,
-                     d_obs=d_obs,
+    loss, m, autoencoder = train_fun(Physics=Physics, autoencoder=autoencoder,
+                     d_obs=d_obs, freqs=INV_FREQS,
                      optim_autoencoder=optim_autoencoder, criteria=criteria,
                      mini_batches = MINI_BATCHES,
                      src_loc=src_loc, rec_loc=rec_loc, src=src,

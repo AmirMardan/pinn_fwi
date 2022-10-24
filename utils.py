@@ -62,13 +62,20 @@ def seed_everything(seed=42):
     torch.backends.cudnn.benchmark = False
 
 
-def save_checkpoint(model, inpa, filename="my_checkpoint.pth.tar"):
+def save_checkpoint(model, filename="my_checkpoint.pth.tar"):
     print("=> Saving checkpoint")
     checkpoint = {
         "state_dict": model.state_dict(),
         # "optimizer": optimizer.state_dict(),
         
-        "inpa": inpa
+        # "inpa": inpa
     }
     
     torch.save(checkpoint, filename)
+
+
+def load_checkpoint(checkpoint_file, model, device):
+    print("=> Loading checkpoint")
+    checkpoint = torch.load(checkpoint_file, map_location=device)
+    model.load_state_dict(checkpoint["state_dict"])
+    

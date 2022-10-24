@@ -8,7 +8,7 @@ PACKAGE = "deepwave"
 
 MODEL = "marmousi_bl" 
 DEVICE = ('cpu', 'cuda')[torch.cuda.is_available()]
-ITERATION = 2000
+ITERATION = 500
 N_BLOCKS_ENCODER = 5
 N_BLOCKS_DECODER = 4
 BATCH_SIZE = 1
@@ -30,7 +30,7 @@ DH = 5
 
 N_SHOTS = 60
 MINI_BATCHES = 3  # Number of mini batches
-
+INV_FREQS = [12, 25, 60] # 
 N_SOURCE_PER_SHOT = 1
 
 inpa = {
@@ -47,7 +47,8 @@ inpa = {
     'device': 2, # The device to run the program. Usually 0: CPU 1: GPU
     'seimogram_shape': '3d',
     'energy_balancing': False,
-    "chpr": 70
+    "chpr": 70,
+    "f_inv": INV_FREQS
 }
 NT = int(inpa['t'] // inpa["dt"] + 1)
 
