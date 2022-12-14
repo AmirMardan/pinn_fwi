@@ -10,6 +10,7 @@ import torch.nn as nn
 import PyFWI.wave_propagation as wave
 import PyFWI.processing as process
 import matplotlib.pyplot as plt
+import seistorch 
 
 
 PATH = os.path.abspath(os.path.join(os.path.abspath(__file__), ".."))

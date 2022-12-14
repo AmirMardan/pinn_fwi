@@ -8,7 +8,7 @@ PACKAGE = "deepwave"
 
 MODEL = "marmousi_bl" 
 DEVICE = ('cpu', 'cuda')[torch.cuda.is_available()]
-ITERATION = 500
+ITERATION = 10
 N_BLOCKS_ENCODER = 5
 N_BLOCKS_DECODER = 4
 BATCH_SIZE = 1
@@ -28,14 +28,14 @@ DT = 0.004
 F_PEAK = 25
 DH = 5
 
-N_SHOTS = 60
+N_SHOTS = 3
 MINI_BATCHES = 3  # Number of mini batches
 INV_FREQS = [12, 25, 60] # 
 N_SOURCE_PER_SHOT = 1
 
 inpa = {
     'ns': N_SHOTS,  # Number of sources
-    'sdo': 8,  # Order of FD
+    'sdo': 4,  # Order of FD
     'fdom': F_PEAK,  # Central frequency of source
     'dh': DH,  # Spatial sampling rate
     'dt': DT,  # Temporal sampling rate
@@ -111,3 +111,32 @@ elif PACKAGE == "deepwave":
     .repeat(N_SHOTS, N_SOURCE_PER_SHOT, 1)
     .to(DEVICE)
     )
+elif PACKAGE == "seistorch":
+    print("======= Package seistorch is used =========")
+    from train import train_deepwave
+    from networks import Physics_seistorch
+    # from seistorch.utils import ricker 
+    
+    Physics = Physics_seistorch
+    train_fun = train_deepwave
+    
+    # Shot 1 source located at cell [0, 1], shot 2 at [0, 2], shot 3 at [0, 3]
+    src_loc = torch.zeros(N_SHOTS, 2,
+                          dtype=torch.long, device=DEVICE)
+    src_loc = torch.Tensor(np.flip(src_loc_temp, axis=0) // DH)
+
+
+    # Receivers located at [0, 1], [0, 2], ... for every shot
+    rec_loc = torch.zeros(N_RECEIVERS, 2,
+                          dtype=torch.long, device=DEVICE)
+    rec_loc[:, :] = (
+        torch.Tensor(np.flip(rec_loc_temp, axis=0)/DH)
+        )
+    # print(src_loc)
+    # print(rec_loc.shape)
+    
+    
+    src = seistorch.utils.ricker(t=inpa["t"], dt=DT, f_peak=F_PEAK,
+                           device=DEVICE, peak_time=1.5/F_PEAK)
+
+    
