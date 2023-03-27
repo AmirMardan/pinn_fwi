@@ -188,50 +188,7 @@ class Physics_deepwave(nn.Module):
         taux = out[-1]
         return taux.permute(0, 2, 1).unsqueeze(0)
            
-
-class Physics_pyfwi(nn.Module):
-    def __init__(self, inpa , src, rec_loc, f_show=False, b_show=False):
-        super(Physics_pyfwi, self).__init__()
-                
-        self.b_show = b_show
-        self.f_show = f_show
-        self.src = src
-        self.rec_loc = rec_loc
-        self.inpa = inpa
-        # To use less ram, I make the size 1, and torch uses 
-        self.vs = torch.zeros(1)
-        self.rho = torch.ones(1)
-    
-    def forward(self, vp):
-        
-        _, _, taux, tauz, _ = Fwi.apply(self.inpa, vp, self.vs, self.rho,
-                               self.src, self.rec_loc, self.f_show, self.b_show)
-        # TODO:  Normalize 
-        return taux.permute(2, 0, 1).unsqueeze(0) # data_normalization(taux.permute(2, 0, 1)).unsqueeze(0)
-    
-       
-# class Physics_pyfwi(nn.Module):
-#     def __init__(self, wave, b_show=False, f_show=False):
-#         super(Physics_pyfwi, self).__init__()
-#         nz = wave.nz
-#         nx = wave.nx 
-        
-#         self.b_show = b_show
-#         self.f_show = f_show
-        
-#         self.w = wave
-#         # To use less ram, I make the size 1, and torch uses 
-#         self.vs = torch.zeros(1)
-#         self.rho = torch.ones(1)
-    
-#     def forward(self, vp):
-        
-#         taux, tauz = Fwi.apply(self.w, vp, self.vs, self.rho,
-#                                self.f_show, self.b_show)
-        
-#         return data_normalization(taux.permute(2, 0, 1)).unsqueeze(0)
-        
-         
+           
 if __name__ == "__main__":
     import torch 
     nb = 64

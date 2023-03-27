@@ -1,4 +1,4 @@
-PyFWI
+PyFWI==0.1.9
 pyopencl
-deepwave
+deepwave==0.0.15
 segyio

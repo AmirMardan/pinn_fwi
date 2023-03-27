@@ -5,10 +5,15 @@ import os
 from utils import * 
 
 PACKAGE = "deepwave"
+from train import train_deepwave
+from networks import Physics_deepwave
+    
+Physics = Physics_deepwave
+train_fun = train_deepwave
 
 MODEL = "marmousi_bl" 
 DEVICE = ('cpu', 'cuda')[torch.cuda.is_available()]
-ITERATION = 10
+ITERATION = 800
 N_BLOCKS_ENCODER = 5
 N_BLOCKS_DECODER = 4
 BATCH_SIZE = 1
@@ -69,74 +74,23 @@ src_loc_temp[:, 1] -= 2 * inpa['dh']
 # Create the source
 N_RECEIVERS = n_surface_rec + 2 * n_well_rec
 inpa["n_well_rec"] = n_well_rec
-
-if PACKAGE == "pyfwi":
-    print("======= Package pyfwi is used =========")
-    from train import train_pyfwi
-    from networks import Physics_pyfwi
     
-    Physics = Physics_pyfwi
-    train_fun = train_pyfwi
-    
-    src_loc = src_loc_temp
-    rec_loc = rec_loc_temp
-    src = acq.Source(src_loc_temp, inpa['dh'], inpa['dt'])
-    src.Ricker(inpa['fdom'])
-    
-    
-elif PACKAGE == "deepwave":
-    print("======= Package deepwave is used =========")
-    from train import train_deepwave
-    from networks import Physics_deepwave
-    
-    Physics = Physics_deepwave
-    train_fun = train_deepwave
-    
-    # Shot 1 source located at cell [0, 1], shot 2 at [0, 2], shot 3 at [0, 3]
-    src_loc = torch.zeros(N_SHOTS, N_SOURCE_PER_SHOT, 2,
-                          dtype=torch.long, device=DEVICE)
-    src_loc[:, 0, :] = torch.Tensor(np.flip(src_loc_temp) // DH)
+# Shot 1 source located at cell [0, 1], shot 2 at [0, 2], shot 3 at [0, 3]
+src_loc = torch.zeros(N_SHOTS, N_SOURCE_PER_SHOT, 2,
+                        dtype=torch.long, device=DEVICE)
+src_loc[:, 0, :] = torch.Tensor(np.flip(src_loc_temp) // DH)
 
 
-    # Receivers located at [0, 1], [0, 2], ... for every shot
-    rec_loc = torch.zeros(N_SHOTS, N_RECEIVERS, 2,
-                          dtype=torch.long, device=DEVICE)
-    rec_loc[:, :, :] = (
-        torch.Tensor(np.flip(rec_loc_temp)/DH)
-        )
+# Receivers located at [0, 1], [0, 2], ... for every shot
+rec_loc = torch.zeros(N_SHOTS, N_RECEIVERS, 2,
+                        dtype=torch.long, device=DEVICE)
+rec_loc[:, :, :] = (
+    torch.Tensor(np.flip(rec_loc_temp)/DH)
+    )
     
     
-    src = (
+src = (
     deepwave.wavelets.ricker(F_PEAK, NT, DT, 1.5 / F_PEAK)
     .repeat(N_SHOTS, N_SOURCE_PER_SHOT, 1)
     .to(DEVICE)
     )
-elif PACKAGE == "seistorch":
-    print("======= Package seistorch is used =========")
-    from train import train_deepwave
-    from networks import Physics_seistorch
-    # from seistorch.utils import ricker 
-    
-    Physics = Physics_seistorch
-    train_fun = train_deepwave
-    
-    # Shot 1 source located at cell [0, 1], shot 2 at [0, 2], shot 3 at [0, 3]
-    src_loc = torch.zeros(N_SHOTS, 2,
-                          dtype=torch.long, device=DEVICE)
-    src_loc = torch.Tensor(np.flip(src_loc_temp, axis=0) // DH)
-
-
-    # Receivers located at [0, 1], [0, 2], ... for every shot
-    rec_loc = torch.zeros(N_RECEIVERS, 2,
-                          dtype=torch.long, device=DEVICE)
-    rec_loc[:, :] = (
-        torch.Tensor(np.flip(rec_loc_temp, axis=0)/DH)
-        )
-    # print(src_loc)
-    # print(rec_loc.shape)
-    
-    
-    src = seistorch.utils.ricker(t=inpa["t"], dt=DT, f_peak=F_PEAK,
-                           device=DEVICE, peak_time=1.5/F_PEAK)
-
-    

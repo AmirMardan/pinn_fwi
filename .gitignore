@@ -1,0 +1,5 @@
+0_env_pinn_fwi
+results/*
+data_model/*
+!data_model/*.bin
+__pycache__

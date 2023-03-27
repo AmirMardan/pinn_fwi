@@ -15,20 +15,6 @@ def deepwave_engine(Physics, dh, dt,
     physics = Physics(dh, dt, src_batch,
                       src_loc_batch, rec_loc_batch)
     return physics
-
-
-def pyfwi_engin(Physics, inpa, dh, dt, fpeak,
-                src_loc, rec_loc,
-                batch, mini_batches
-                ):
-    src_loc_batch = src_loc[batch::mini_batches]
-        
-    src_batch = acq.Source(src_loc_batch, dh, dt)
-    src_batch.Ricker(fpeak)
-
-    physics = Physics(inpa, src=src_batch, rec_loc=rec_loc,
-                      f_show=False, b_show=False)
-    return physics
         
         
 def train_deepwave(Physics, autoencoder, d_obs,
@@ -61,39 +47,6 @@ def train_deepwave(Physics, autoencoder, d_obs,
         
         loss_minibatch.append(np.mean(loss_freqs))
         
-    return np.mean(loss_minibatch), m, autoencoder
-
-
-def train_pyfwi(Physics, autoencoder, d_obs,
-                optim_autoencoder, criteria,
-                mini_batches, freqs,
-                src_loc, rec_loc, src, inpa,
-                test=None):
-    
-    loss_minibatch = []
-    for batch in tqdm(range(mini_batches), leave=True):
-        loss_freqs = []
-        for freq in freqs:
-            optim_autoencoder.zero_grad()
-        
-            src_loc_batch = src_loc[batch::mini_batches]
-            
-            src_batch = acq.Source(src_loc_batch, inpa['dh'], inpa['dt'])
-            src_batch.Ricker(inpa['fdom'])
-
-            physics = Physics(inpa, src=src_batch, rec_loc=rec_loc,
-                            f_show=False, b_show=False)
-            
-            loss, m = train_engine(autoencoder, physics,
-                                    criteria, optim_autoencoder,
-                                    d_obs, freq,
-                                    batch, mini_batches,
-                                    test=test)
-            
-            loss_freqs.append(loss)
-        
-        loss_minibatch.append(np.mean(loss_freqs))
-                
     return np.mean(loss_minibatch), m, autoencoder
 
 
