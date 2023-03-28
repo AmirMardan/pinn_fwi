@@ -33,7 +33,7 @@ DT = 0.004
 F_PEAK = 25
 DH = 5
 
-N_SHOTS = 3
+N_SHOTS = 18
 MINI_BATCHES = 3  # Number of mini batches
 INV_FREQS = [12, 25, 60] # 
 N_SOURCE_PER_SHOT = 1

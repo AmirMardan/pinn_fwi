@@ -15,8 +15,11 @@ The required parameters for running this notebook should be set in this [config]
 ```console
 pip install -r requirements.txt
 ```
-THe result of running this notebook is shown in the following figure. 
-![res](/readme_files/result_800.png)
+The result of running this notebook for three shots is shown in the following figure. 
+![res](/readme_files/result_3shots_800.png)
+
+Using 18 shots, result is as following figure.
+![res](/readme_files/result_18shots_800.png)
 
 As you see, the networks work properly enough to create the familiar structures of the Marmousi model, but optimum hyperparameters and acquisition parameters should be found.
 I have not used the parameters based on the paper.
