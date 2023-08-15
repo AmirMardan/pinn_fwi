@@ -1,7 +1,7 @@
 from config import *
 # export CXX=/usr/local/opt/llvm/bin/clang
 
-SAVE = 0
+SAVE = 1
 
 vp, _ = earth_model(MODEL, smooth=10, device=DEVICE)
 vs = torch.zeros(1)
