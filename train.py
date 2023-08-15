@@ -1,6 +1,5 @@
 
 from utils import *
-import PyFWI.acquisition as acq
 import torchfwi
 
 

@@ -1,5 +1,5 @@
 from config import *
-from networks import Autoencoder  #, Physics
+from networks import Autoencoder
 
 seed_everything()
 

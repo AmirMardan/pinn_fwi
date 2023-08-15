@@ -2,10 +2,6 @@ import torch.nn as nn
 import torch
 from utils import *
 
-# from torchfwi import Fwi
-# from PyFWI.torchfwi import Fwi
-
-
 class SubBlock(nn.Module):
     def __init__(self, in_channels, out_channels, stride):
         super(SubBlock, self).__init__()

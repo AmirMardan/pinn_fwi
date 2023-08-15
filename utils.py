@@ -1,15 +1,15 @@
 from prettytable import PrettyTable
 import torch 
-import PyFWI.model_dataset as md
+# import PyFWI.model_dataset as md
 import os 
 import random 
 import numpy as np
 from tqdm import tqdm
 import deepwave
 import torch.nn as nn
-import PyFWI.wave_propagation as wave
-import PyFWI.processing as process
 import matplotlib.pyplot as plt
+from scipy.ndimage.filters import gaussian_filter
+import wavelets
 
 PATH = os.path.abspath(os.path.join(os.path.abspath(__file__), ".."))
 
@@ -20,7 +20,7 @@ def earth_model(name, smooth=0, device="cpu"):
     elif name == "marmousi_bl":
         vp = torch.load(PATH + "/data_model/marmousi_bl.bin")
          
-    vp0 = torch.tensor(md.model_smoother({"vp":vp}, smoothing_value=10)['vp'])
+    vp0 = torch.tensor(gaussian_filter(vp, 10))
     return vp.to(device=device), vp0.to(device=device)
 
 

@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt 
-import PyFWI.seiplot as splt
-import PyFWI.acquisition as acq
 import os 
+import torch
+import numpy as np
 from utils import * 
+from pyfwi_tools import show_earth_model
 
 PACKAGE = "deepwave"
 from train import train_deepwave
@@ -11,19 +12,29 @@ from networks import Physics_deepwave
 Physics = Physics_deepwave
 train_fun = train_deepwave
 
+rec_in_well = False  # If you want to have geophones in well
+
+LR_MILESTONE = 50
 MODEL = "marmousi_bl" 
-DEVICE = ('cpu', 'cuda')[torch.cuda.is_available()]
+LOAD_CHP = True
+DEVICE = ("cpu", "cuda")[torch.cuda.is_available()]
+# DEVICE =  (("cpu", "cuda")[torch.cuda.is_available()],
+#           "mps")[torch.backends.mps.is_available()]
 ITERATION = 800
+PRINT_FREQ = np.ceil(ITERATION/20)
+
 N_BLOCKS_ENCODER = 5
 N_BLOCKS_DECODER = 4
 BATCH_SIZE = 1
 VP_MIN = 1450.0
 VP_MAX = 4550.0 
 
+LAM_PRIOR = 0.0  # 1e-5
+rp_properties = None
 if MODEL == "marmousi":
-    model_shape = (100, 310)
+    model_shape = [100, 310]
 elif MODEL in ["marmousi_bl", "np_marmousi"]:
-    model_shape = (116, 227)
+    model_shape = [116, 227]
 
 DECODER_INITIAL_SHAPE = torch.div(torch.tensor(model_shape), (2 ** (N_BLOCKS_DECODER - 1)), rounding_mode='floor')
 FINAL_SIZE_ENCODER = BATCH_SIZE * DECODER_INITIAL_SHAPE[0] * DECODER_INITIAL_SHAPE[1]
@@ -62,13 +73,36 @@ inpa['rec_dis'] =  1 * inpa['dh']  # Define the receivers' distance
 offsetx = inpa['dh'] * model_shape[1]
 depth = inpa['dh'] * model_shape[0]
 
-# Design the acquisition
-src_loc_temp, rec_loc_temp, n_surface_rec, n_well_rec = acq.acq_parameters(
-    ns=inpa['ns'], rec_dis=inpa['rec_dis'],
-    depth=depth, offsetx=offsetx,
-    acq_type=inpa['acq_type'], dh=inpa['dh'],
-    sdo=inpa['sdo']
-)
+surface_loc_x = np.arange(2*inpa["dh"], offsetx-2*inpa["dh"], inpa['dh'], np.float32)
+n_surface_rec = len(surface_loc_x)
+surface_loc_z = 4 * inpa["dh"] * np.ones(n_surface_rec, np.float32)
+surface_loc = np.vstack((surface_loc_x, surface_loc_z)).T
+
+if rec_in_well:
+    well_z = np.arange(2*inpa["dh"], depth-2*inpa["dh"], inpa['dh'], np.float32)
+    n_well_rec = len(well_z)
+    well_left = np.vstack((4 * inpa["dh"] * np.ones(n_well_rec, np.float32),
+                        well_z)).T
+    well_right = np.vstack((offsetx - 4 * inpa["dh"] * np.ones(n_well_rec, np.float32),
+                        well_z)).T
+
+    rec_loc_temp = np.vstack((
+        well_left,
+        surface_loc,
+        well_right
+    ))
+else:
+    rec_loc_temp = surface_loc
+    n_well_rec = 0
+
+src_loc_temp = np.vstack((
+    np.linspace(4*inpa["dh"], offsetx-4*inpa["dh"], N_SHOTS, np.float32),
+    2 * inpa["dh"] * np.ones(N_SHOTS, np.float32)
+    )).T
+ 
+# src_loc_temp = np.array([[  20.,   20.],
+#                       [ 555.,   20.],
+#                       [1090.,   20.]], dtype=np.float32)
 src_loc_temp[:, 1] -= 2 * inpa['dh']
 
 # Create the source
@@ -90,7 +124,7 @@ rec_loc[:, :, :] = (
     
     
 src = (
-    deepwave.wavelets.ricker(F_PEAK, NT, DT, 1.5 / F_PEAK)
+    wavelets.ricker(F_PEAK, NT, DT, 1.5 / F_PEAK)
     .repeat(N_SHOTS, N_SOURCE_PER_SHOT, 1)
     .to(DEVICE)
     )

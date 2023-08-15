@@ -1,14 +1,14 @@
 from config import *
 # export CXX=/usr/local/opt/llvm/bin/clang
 
-SAVE = 1
+SAVE = 0
 
 vp, _ = earth_model(MODEL, smooth=10, device=DEVICE)
 vs = torch.zeros(1)
 rho = torch.ones(1)
 
 if not SAVE:
-    fig = splt.earth_model({"Vp": vp}, cmap="jet")
+    fig = show_earth_model({"Vp": vp}, cmap="jet")
     fig.axes[0].plot(rec_loc_temp[:,0]/DH, rec_loc_temp[:, 1]/DH, 'k*', markersize=1)
     fig.axes[0].plot(src_loc_temp[:,0]/DH, src_loc_temp[:, 1]/DH, 'rv', markersize=4)
 
