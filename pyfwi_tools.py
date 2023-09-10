@@ -8,6 +8,48 @@ from mpl_toolkits import axes_grid1
 from mpl_toolkits.axes_grid1.axes_divider import make_axes_locatable
 from scipy import interpolate as intp
 
+
+def model_resizing(model0,  bx=None, ex=None, bz=None, ez=None, ssr=(1, 1)):
+    """
+    model_resizing resizes your model which is dictionary by cutting and interpolation.
+
+    
+
+    Parameters
+    ----------
+    model0 : dict
+        The input model to be resized
+    bx : int, optional
+        First column of desired model, by default None
+    ex : int, optional
+        Last column of desired model, by default None
+    bz : int, optional
+        First row of desired model, by default None
+    ez : int, optional
+        Last row of desired model, by default None
+    ssr : tuple, optional
+        Sampling rate for interpolation in Z- and X-directions, by default (1, 1)
+
+    Returns
+    -------
+    model : dict
+        Dictionary containg the resized model
+    """
+    model = copy.deepcopy(model0)
+    for param in model:
+        gz, gx = np.mgrid[:model[param].shape[0], :model[param].shape[1]]
+        x = np.arange(0, model[param].shape[1], 1)
+        z = np.arange(0, model[param].shape[0], 1)
+        interpolator = intp.interp2d(x, z, model[param])
+        xi = np.arange(0, model[param].shape[1], ssr[1])
+        zi = np.arange(0, model[param].shape[0], ssr[0])
+        model[param] = interpolator(xi, zi)
+        model[param] = model[param].astype(np.float32, order='C')
+
+        model[param] = model[param][bz:ez, bx:ex]
+    return model
+
+
 def prepare_residual(res, s=1.):
     """
     prepare_residual prepares the seismic data as the desire format of FWI class.
@@ -106,47 +148,6 @@ def adj_lowpass(x, highcut, fn, order, axis=1):
     adj_f_inv = np.fft.ifft(fd, axis=axis).real
     adj_f_inv = adj_f_inv[:, :-padding, :]
     return adj_f_inv
-
-
-def model_resizing(model0,  bx=None, ex=None, bz=None, ez=None, ssr=(1, 1)):
-    """
-    model_resizing resizes your model which is dictionary by cutting and interpolation.
-
-    
-
-    Parameters
-    ----------
-    model0 : dict
-        The input model to be resized
-    bx : int, optional
-        First column of desired model, by default None
-    ex : int, optional
-        Last column of desired model, by default None
-    bz : int, optional
-        First row of desired model, by default None
-    ez : int, optional
-        Last row of desired model, by default None
-    ssr : tuple, optional
-        Sampling rate for interpolation in Z- and X-directions, by default (1, 1)
-
-    Returns
-    -------
-    model : dict
-        Dictionary containg the resized model
-    """
-    model = copy.deepcopy(model0)
-    for param in model:
-        gz, gx = np.mgrid[:model[param].shape[0], :model[param].shape[1]]
-        x = np.arange(0, model[param].shape[1], 1)
-        z = np.arange(0, model[param].shape[0], 1)
-        interpolator = intp.interp2d(x, z, model[param])
-        xi = np.arange(0, model[param].shape[1], ssr[1])
-        zi = np.arange(0, model[param].shape[0], ssr[0])
-        model[param] = interpolator(xi, zi)
-        model[param] = model[param].astype(np.float32, order='C')
-
-        model[param] = model[param][bz:ez, bx:ex]
-    return model
 
 
 def show_earth_model(model, keys=[],offset=None, depth= None, **kwargs):
