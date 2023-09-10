@@ -1,8 +1,11 @@
+from utils import seed_everything
+seed_everything(42)
+
 from config import *
-from networks import Autoencoder
+from networks import Autoencoder  #, Physics
+# from tools import SaveResults#, load_checkpoint
 
-seed_everything()
-
+print(f"Running on {DEVICE}")
 d_obs = torch.load(
     f= PATH + "/data_model/taux_obs_" + PACKAGE + "_" + MODEL + "_" + str(N_SHOTS)
     )
@@ -14,9 +17,10 @@ d_obs = d_obs.unsqueeze(0).to(device=DEVICE)
 # d_obs = d_obs[:,:3,...]
 # print(d_obs.shape)
 
-vp, vp0 = earth_model("marmousi_bl", smooth=15, device=DEVICE)
+vp, vp0 = earth_model(MODEL, smooth=15, 
+                      device=DEVICE)
 
-# im = splt.earth_model({"Vp": vp, "$Vp_0$":vp0}, cmap="jet")
+# im = show_earth_model({"Vp": vp, "$Vp_0$":vp0}, cmap="jet")
 # plt.show(block=False)
 
 criteria = torch.nn.MSELoss(reduction='sum')
