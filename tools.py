@@ -25,6 +25,7 @@ def save_checkpoint(
     torch.save(model.state_dict(), file)
     print("== Checkpoint is saved! ==")
     
+    
 class SaveResults:
     def __init__(self, path:str) -> None:
         now = datetime.now()
@@ -46,6 +47,26 @@ class SaveResults:
         
         print(f"Checkpoint {file_name} is saved in {self.path_to_save}")
         
+
+def rock_properties():
+    classic_rock_properties = {
+        'k_q': 37,
+        'k_c': 21,
+        'k_w': 3.01,
+        'k_h': 0.13,
+    
+        'mu_q': 44,
+        'mu_c': 10,
+        'mu_w': 0,
+        'mu_h': 0,
+    
+        'rho_q': 2.7,
+        'rho_c': 2.6,
+        'rho_w': 1.055,
+        'rho_h': 0.336,
+        'cs': 20
+    }
+    return classic_rock_properties
 
 def load_checkpoint(model, 
                     file: str,
