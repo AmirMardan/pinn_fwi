@@ -3,3 +3,5 @@ results/*
 data_model/*
 !data_model/*.bin
 __pycache__
+
+.DS_Store

@@ -1,4 +1,11 @@
-PyFWI==0.1.9
-pyopencl
+# PyFWI==0.1.9
+# pyopencl
+torch==1.10.2
 deepwave==0.0.15
-segyio
+scikit-build
+matplotlib
+numpy
+prettytable
+tqdm
+scipy
+# segyio   # If has problem installing this package, you can clone it has `https://github.com/equinor/segyio.git` and install it as `pip install segyio/python`

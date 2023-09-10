@@ -1,28 +1,33 @@
 from prettytable import PrettyTable
 import torch 
-import PyFWI.model_dataset as md
 import os 
 import random 
 import numpy as np
 from tqdm import tqdm
 import deepwave
 import torch.nn as nn
-import PyFWI.wave_propagation as wave
-import PyFWI.processing as process
+from scipy.ndimage import gaussian_filter
 import matplotlib.pyplot as plt
+from scipy.io import loadmat
+from tools import (SaveResults, rock_properties, 
+                   load_checkpoint, awgn)
+from PyFWI.rock_physics import pcs2dv_gassmann
+from pyfwi_tools import model_resizing
+from typing import List, Tuple, Optional
 
 PATH = os.path.abspath(os.path.join(os.path.abspath(__file__), ".."))
 
-
 def earth_model(name, smooth=0, device="cpu"):
+    
     if name == "marmousi_30":
         vp = torch.load(PATH + "/data_model/marmousi_30.bin")
     elif name == "marmousi_bl":
         vp = torch.load(PATH + "/data_model/marmousi_bl.bin")
-         
-    vp0 = torch.tensor(md.model_smoother({"vp":vp}, smoothing_value=10)['vp'])
+        
+    vp0 = torch.tensor(gaussian_filter(vp, sigma=smooth))
+    
     return vp.to(device=device), vp0.to(device=device)
-
+    
 
 def count_parameters(model):
     '''
@@ -50,16 +55,15 @@ def data_normalization(data):
     return data / (data_max.abs() + 1e-10)
 
 
-def seed_everything(seed=42):
-    os.environ['PYTHONHASHSEED'] = str(seed)
+def seed_everything(seed=42):    
     random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
-
+ 
 
 def save_checkpoint(model, filename="my_checkpoint.pth.tar"):
     print("=> Saving checkpoint")
@@ -71,10 +75,3 @@ def save_checkpoint(model, filename="my_checkpoint.pth.tar"):
     }
     
     torch.save(checkpoint, filename)
-
-
-def load_checkpoint(checkpoint_file, model, device):
-    print("=> Loading checkpoint")
-    checkpoint = torch.load(checkpoint_file, map_location=device)
-    model.load_state_dict(checkpoint["state_dict"])
-    
