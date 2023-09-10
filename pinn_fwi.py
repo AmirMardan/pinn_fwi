@@ -63,7 +63,10 @@ if LOAD_CHP:
                 decoder_initial_shape=DECODER_INITIAL_SHAPE,
                 decoder_final_shape=model_shape
                 )
+    
 autoencoder = autoencoder.to(device=DEVICE)
+
+save_results = SaveResults(path=PATH)
 
 # optim_phys = torch.optim.Adam(autoencoder.parameters(), lr=5, betas=(0.5, 0.9))
 optim_autoencoder = torch.optim.Adam(autoencoder.parameters(), lr=1e-3, betas=(0.5, 0.9))
@@ -100,12 +103,32 @@ for iter in range(ITERATION):
         )
     if iter%PRINT_FREQ == 0:
         print(f"Iteration {iter + 1} ===== loss: {all_loss_data[-1]} for data and {all_loss_model[-1]} for model")
+    if iter%SAVE_FREQ == 0:
+        save_results.numpy(np.array(m.cpu().detach()), file_name=f"m_{iter}")
+    #     plt.figure()
+    #     plt.imshow(np.array(m.cpu().detach()), cmap="jet")
     scheduler_autoencoder.step()
 
+m = np.array(m.cpu().detach())
+
+#%% Saving the results
+save_results.numpy(all_loss_data, file_name="all_loss_data")
+save_results.numpy(all_loss_prior, file_name="all_loss_prior")
+save_results.numpy(all_loss_model, file_name="all_loss_model")
+save_results.numpy(m, file_name="m")
+save_results.network(model=autoencoder, file_name="autoencoder")
+#%% Show results
 plt.figure()
-plt.imshow(m.cpu().detach(), cmap="jet")
+plt.imshow(m, cmap="jet")
+plt.plot([well_locations, well_locations], 
+         [0, depth], "r")
 plt.colorbar()
 
 plt.figure()
-plt.plot(all_loss)
-plt.show()
+plt.plot(all_loss_data)
+plt.show(block=False)
+
+plt.figure()
+plt.plot(all_loss_model)
+plt.show(block=True)
+
