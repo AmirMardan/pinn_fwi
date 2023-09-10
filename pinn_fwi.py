@@ -65,21 +65,37 @@ autoencoder = autoencoder.to(device=DEVICE)
 optim_autoencoder = torch.optim.Adam(autoencoder.parameters(), lr=1e-3, betas=(0.5, 0.9))
 scheduler_autoencoder = torch.optim.lr_scheduler.StepLR(optim_autoencoder, 30, gamma=0.5)
     
-all_loss = []
+all_loss_data = []
+all_loss_model = []
+all_loss_prior = []
 
 for iter in range(ITERATION):
-    loss, m, autoencoder = train_fun(Physics=Physics, autoencoder=autoencoder,
-                     d_obs=d_obs, freqs=INV_FREQS,
-                     optim_autoencoder=optim_autoencoder, criteria=criteria,
-                     mini_batches = MINI_BATCHES,
-                     src_loc=src_loc, rec_loc=rec_loc, src=src,
-                     inpa=inpa, test=None)
+    loss_data, loss_prior, m, autoencoder  = train_fun(
+        Physics=Physics, 
+        autoencoder=autoencoder,
+        d_obs=d_obs, 
+        freqs=INV_FREQS,
+        optim_autoencoder=optim_autoencoder, 
+        criteria=criteria,
+        mini_batches = MINI_BATCHES,
+        src_loc=src_loc, 
+        rec_loc=rec_loc, 
+        src=src,
+        inpa=inpa, 
+        lam_prior=LAM_PRIOR,
+        well_locations=well_locations,
+        well_data=well_data,
+        test=None)
     
-    all_loss.append(loss)
-        
-    if iter%1 == 0:
-        print(f"Iteration {iter + 1} ===== loss: {all_loss[-1]}")
-        
+    all_loss_data.append(loss_data)
+    all_loss_prior.append(loss_prior) 
+    
+    with torch.no_grad():
+        all_loss_model.append(
+            criteria(m, vp).item()
+        )
+    if iter%PRINT_FREQ == 0:
+        print(f"Iteration {iter + 1} ===== loss: {all_loss_data[-1]} for data and {all_loss_model[-1]} for model")
     scheduler_autoencoder.step()
 
 plt.figure()
