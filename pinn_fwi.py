@@ -24,7 +24,11 @@ vp, vp0 = earth_model(MODEL, smooth=15,
 # plt.show(block=False)
 
 criteria = torch.nn.MSELoss(reduction='sum')
-# criteria = torch.nn.L1Loss(reduction='sum')
+criteria = torch.nn.L1Loss(reduction='sum')
+
+well_locations = int(vp.shape[1] //2)
+depth = int(3 * vp.shape[0] // 4)
+well_data = vp[:depth, well_locations]
 
 autoencoder = Autoencoder(
         batch_size=BATCH_SIZE, 
@@ -70,7 +74,7 @@ save_results = SaveResults(path=PATH)
 
 # optim_phys = torch.optim.Adam(autoencoder.parameters(), lr=5, betas=(0.5, 0.9))
 optim_autoencoder = torch.optim.Adam(autoencoder.parameters(), lr=1e-3, betas=(0.5, 0.9))
-scheduler_autoencoder = torch.optim.lr_scheduler.StepLR(optim_autoencoder, 30, gamma=0.5)
+scheduler_autoencoder = torch.optim.lr_scheduler.StepLR(optim_autoencoder, LR_MILESTONE, gamma=0.5)
     
 all_loss_data = []
 all_loss_model = []
