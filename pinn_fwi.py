@@ -22,13 +22,43 @@ vp, vp0 = earth_model("marmousi_bl", smooth=15, device=DEVICE)
 criteria = torch.nn.MSELoss(reduction='sum')
 # criteria = torch.nn.L1Loss(reduction='sum')
 
-autoencoder = Autoencoder(batch_size=BATCH_SIZE, in_channels=N_SHOTS,
-                  n_blocks_encoder=N_BLOCKS_ENCODER, n_blocks_decoder=N_BLOCKS_DECODER,
-                  final_size_encoder=FINAL_SIZE_ENCODER, initial_shape_decoder=DECODER_INITIAL_SHAPE,
-                  nt=NT, nr=N_RECEIVERS, final_spatial_shape=model_shape,
-                  m_min=VP_MIN, m_max=VP_MAX,
-                  final_out_channels=1
-                  )
+autoencoder = Autoencoder(
+        batch_size=BATCH_SIZE, 
+        in_channels=N_SHOTS,
+        n_blocks_encoder=N_BLOCKS_ENCODER, 
+        n_blocks_decoder=N_BLOCKS_DECODER,
+        final_size_encoder=FINAL_SIZE_ENCODER, 
+        initial_shape_decoder=DECODER_INITIAL_SHAPE,
+        nt=NT, nr=N_RECEIVERS,
+        final_spatial_shape=model_shape,
+        m_min=VP_MIN, m_max=VP_MAX,
+        final_out_channels=FINAL_OUT_CHANNEL
+        )
+# print(BATCH_SIZE, N_SHOTS, FINAL_SIZE_ENCODER,
+#       DECODER_INITIAL_SHAPE, NT, N_RECEIVERS)
+if LOAD_CHP:
+    autoencoder_default = Autoencoder(
+        batch_size=BATCH_SIZE, 
+        in_channels=22,
+        n_blocks_encoder=N_BLOCKS_ENCODER, # 5
+        n_blocks_decoder=N_BLOCKS_DECODER, # 4
+        final_size_encoder=336, 
+        initial_shape_decoder=[12, 28],
+        nt=801, 
+        nr=223,
+        final_spatial_shape=[96, 227],
+        m_min=VP_MIN, m_max=VP_MAX,
+        final_out_channels=FINAL_OUT_CHANNEL
+        )
+    load_checkpoint(model=autoencoder_default, 
+           file=f"{PATH}/saved_checkpoint/default_chp.tar",
+           device="cpu")
+    
+    autoencoder.reshape(autoencoder_default,
+                d_obs=d_obs.to(device="cpu"),
+                decoder_initial_shape=DECODER_INITIAL_SHAPE,
+                decoder_final_shape=model_shape
+                )
 autoencoder = autoencoder.to(device=DEVICE)
 
 # optim_phys = torch.optim.Adam(autoencoder.parameters(), lr=5, betas=(0.5, 0.9))
