@@ -1,6 +1,6 @@
 # PyFWI==0.1.9
 # pyopencl
-torch==1.10.2
+torch
 deepwave==0.0.15
 scikit-build
 matplotlib
