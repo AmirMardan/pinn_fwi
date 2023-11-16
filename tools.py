@@ -6,7 +6,7 @@ import numpy as np
 from torch.nn.functional import conv2d
 from torch.distributions import Normal
 from math import ceil
-
+from matplotlib.figure import Figure 
 
 def save_checkpoint(
     model,
@@ -46,6 +46,12 @@ class SaveResults:
                         file=f"{self.path_to_save}/{file_name}.tar")
         
         print(f"Checkpoint {file_name} is saved in {self.path_to_save}")
+    
+    def fig(self, fig: Figure,
+            file_name: str,
+            **kwargs) -> None:
+        fig.savefig(f"{self.path_to_save}/{file_name}",
+                    **kwargs) 
         
 
 def rock_properties():

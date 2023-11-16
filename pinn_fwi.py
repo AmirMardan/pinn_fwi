@@ -122,6 +122,11 @@ save_results.numpy(all_loss_model, file_name="all_loss_model")
 save_results.numpy(m, file_name="m")
 save_results.network(model=autoencoder, file_name="autoencoder")
 #%% Show results
+fig, ax = plt.subplots(1,1)
+ax.imshow(m, cmap="jet")
+save_results.fig(fig=fig, 
+                 file_name=f"./estimated_{N_SHOTS}_{ITERATION}.png")
+
 plt.figure()
 plt.imshow(m, cmap="jet")
 plt.plot([well_locations, well_locations], 
