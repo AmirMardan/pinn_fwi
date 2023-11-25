@@ -4,6 +4,8 @@ authors:
   given-names: "Amir"
   orcid: "https://orcid.org/0000-0002-0417-1259"
 title: "Physics-informed full-waveform inversion"
-version: 0.1.0
+version: "0.1.0"
+LICENSE: "MIT"
+doi: "10.5281/zenodo.10206532"
 date-released: 2023-11-25
 url: "https://github.com/AmirMardan/pinn_fwi"
