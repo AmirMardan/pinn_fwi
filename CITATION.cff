@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+authors:
+- family-names: "Mardan"
+  given-names: "Amir"
+  orcid: "https://orcid.org/0000-0002-0417-1259"
+title: "Physics-informed full-waveform inversion"
+version: 0.1.0
+date-released: 2023-11-25
+url: "https://github.com/AmirMardan/pinn_fwi"
