@@ -53,4 +53,17 @@ Physics-guided deep autoencoder to overcome the need for a starting model in ful
 Dhara, Arnab and Mrinal K. Sen
 The Leading Edge (2022),41(6): 375
 https://doi.org/10.1190/tle41060375.1
-``` 
+```
+
+To cite this repository, please use the following BibTex entry,
+```
+@misc{Mardan2023pinnfwi,
+  author = {Mardan, Amir},
+  title = {Physics-informed full-waveform inversion},
+  year = {2013},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{[https://github.com/charlespwd/project-title](https://github.com/AmirMardan/pinn_fwi/)}},
+  release = {0.1.0}
+}
+```
