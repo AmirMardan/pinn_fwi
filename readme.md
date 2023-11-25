@@ -63,7 +63,8 @@ To cite this repository, please use the following BibTex entry,
   year = {2013},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{[https://github.com/charlespwd/project-title](https://github.com/AmirMardan/pinn_fwi/)}},
+  howpublished = {\url{https://github.com/AmirMardan/pinn_fwi/}{https://github.com/AmirMardan/pinn_fwi/}},
+  doi = {https://doi.org/10.5281/zenodo.10206532},
   release = {0.1.0}
 }
 ```
