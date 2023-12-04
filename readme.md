@@ -60,11 +60,11 @@ To cite this repository, please use the following BibTex entry,
 @misc{Mardan2023pinnfwi,
   author = {Mardan, Amir},
   title = {Physics-informed full-waveform inversion},
-  year = {2013},
+  year = {2023},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/AmirMardan/pinn_fwi/}{https://github.com/AmirMardan/pinn_fwi/}},
-  doi = {https://doi.org/10.5281/zenodo.10206532},
+    howpublished = {\url{https://github.com/AmirMardan/pinn_fwi}},
+  doi = {10.5281/zenodo.10206532},
   release = {0.1.0}
 }
 ```
