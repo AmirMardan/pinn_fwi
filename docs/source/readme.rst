@@ -29,7 +29,7 @@ specified versions to be sure everything works.
 
    pip install -r requirements.txt
 
-In this repo, there are four scripts for running FWI: 
+**In this repo, there are four scripts for running FWI:** 
  | 1. `pinn_fwi.py <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.py>`__ for performing PINN- or PIANN-FWI. 
  | 2. `original_fwi.py <https://github.com/AmirMardan/pinn_fwi/blob/main/original_fwi.py>`__ for running the conventional FWI (Not available). 
  | 3. `pinn_for_init.py <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_for_init.py>`__ for performing PINN- or PIANN-FWI to create an initial model and use that to perform the conventional FWI (Not available). 
