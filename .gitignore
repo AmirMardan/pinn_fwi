@@ -9,3 +9,6 @@ __pycache__
 _build/
 
 .vscode/
+
+pinn_fwi_google_colab.ipynb
+show_results.ipynb

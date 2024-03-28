@@ -29,17 +29,11 @@ specified versions to be sure everything works.
 
    pip install -r requirements.txt
 
-In this repo, there are four scripts for running FWI. 1.
-```pinn_fwi.py`` <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.py>`__
-for performing PINN- or PIANN-FWI. 2.
-```original_fwi.py`` <https://github.com/AmirMardan/pinn_fwi/blob/main/original_fwi.py>`__
-for running the conventional FWI. 3.
-```pinn_for_init.py`` <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_for_init.py>`__
-for performing PINN- or PIANN-FWI to create an initial model and use
-that to perform the conventional FWI. 4.
-```pinn_fwi.ipynb`` <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.ipynb>`__
-for performing PINN- or PIANN-FWI, but this notebook might not be
-updated.
+In this repo, there are four scripts for running FWI: 
+ | 1. `pinn_fwi.py <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.py>`__ for performing PINN- or PIANN-FWI. 
+ | 2. `original_fwi.py <https://github.com/AmirMardan/pinn_fwi/blob/main/original_fwi.py>`__ for running the conventional FWI (Not available). 
+ | 3. `pinn_for_init.py <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_for_init.py>`__ for performing PINN- or PIANN-FWI to create an initial model and use that to perform the conventional FWI (Not available). 
+ | 4. `pinn_fwi.ipynb <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.ipynb>`__ for performing PINN- or PIANN-FWI, but this notebook might not be updated.
 
 The result of running this code for 22 shots with 2500 epochs on the
 Marmousi model is shown in the following figures.
