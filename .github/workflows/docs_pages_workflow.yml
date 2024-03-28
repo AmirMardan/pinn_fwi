@@ -2,6 +2,8 @@ name: docs_pages_workflow
  
 # execute this workflow automatically when a we push to main
 on:
+  push:
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 jobs:
