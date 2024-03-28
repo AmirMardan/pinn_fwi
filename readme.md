@@ -1,70 +1,45 @@
-Physics-guided deep autoencoder
-===============================
+PINN-FWI for estimating the Marmousi velocity model
+====================================================
 
-In this repository, I implemented the physics-informed neural network for full-waveform inversion.
-The networks is an autoencoder based on Dhara and Sen (2022) with some modifications. 
+In this repository, I implemented the physics-informed neural network (PINN) for full-waveform inversion. 
+This PINN can be implemented with or without attention block.
 The architecture of their study is shown in the following figure. 
  
-![architecture](/readme_files/architecture.jpg)
+![architecture](/readme_files/architecture.png)
 
-For runing the code, you should use this [notebook](https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.ipynb).
-The required parameters for running this notebook should be set in this [config](https://github.com/AmirMardan/pinn_fwi/blob/main/config.py) file.
+For running the code, you should use this [notebook](https://github.com/AmirMardan/piann_fwi/blob/main/pinn_fwi.ipynb).
+The required parameters for running this notebook should be set in this [config](https://github.com/AmirMardan/piann_fwi/blob/main/config.py) file.
 
 <span style='color:red; font-weight:bold;'>Note: </span> I have commented cell 3 in this notebook, you should run this cell whenever you change an acquisition parameter (and for the first time using the codes).
 
-<span style='color:red; font-weight:bold;'>Note: </span> Please use the [requirements](https://github.com/AmirMardan/pinn_fwi/blob/main/requirements.txt) file (written in the jupyter file) to install the packages with specified versions to be sure everything works.
+<span style='color:red; font-weight:bold;'>Note: </span> Please use the [requirements](https://github.com/AmirMardan/piann_fwi/blob/main/requirements.txt) file (written in the jupyter file) to install the packages with specified versions to be sure everything works.
 ```console
 pip install -r requirements.txt
 ```
-The result of running this notebook for three shots is shown in the following figure. 
-![res](/readme_files/result_22shots_300.png)
 
-The estimated velocity at an imaginary well location (dashed red line) is 
+In this repo, there are four scripts for running FWI.
+1. [`pinn_fwi.py`](https://github.com/AmirMardan/piann_fwi/blob/main/pinn_fwi.py) for performing PINN- or PIANN-FWI.
+2. [`original_fwi.py`](https://github.com/AmirMardan/piann_fwi/blob/main/original_fwi.py) for running the conventional FWI.
+3. [`pinn_for_init.py`](https://github.com/AmirMardan/piann_fwi/blob/main/pinn_for_init.py) for performing PINN- or PIANN-FWI to create an initial model and use that to perform the conventional FWI.
+4. [`pinn_fwi.ipynb`](https://github.com/AmirMardan/piann_fwi/blob/main/pinn_fwi.ipynb) for performing PINN- or PIANN-FWI, but this notebook might not be updated.
 
-![well](/readme_files/well_22shots_300.png)
+The result of running this code for 22 shots with 2500 epochs on the Marmousi model is shown in the following figures. 
 
-As you see, the networks work properly enough to create the familiar structures of the Marmousi model, but optimum hyperparameters and acquisition parameters should be found.
-I have not used the parameters based on the paper.
-If you want to reproduce Dhara's work, use the following table.
+![res](/readme_files/marmousi_clean.png)
+For a faster convergence (300 epochs), I considered geophones around the model and the results are
+![with_init](/readme_files/image2024_marmousi_clean.png)
+where the hybrid method is using the PIANN-FWI for creating only initial model.
 
-
-| Parameter      | Description      |  I used  |  In the paper  |
-| ----------- | -----------         |   ------ | -----------    |
-| `N_SHOTS`      | Number of shots  |  22       | 18             |
-| `DH`   | Spatial sampling         | 5 m      | 1 m            |
-| `VP_MIN`| Minimum velocity        | 1450 m/s | 1500 m/s       |
-| `VP_MAX`| Maximum velocity        | 4550 m/s | 4700 m/s       |
-| `N_RECEIVERS`| Number of receivers| 447      | 200            |
-| `ITERATION`| Number of iterations | 300      | 4000           |
-
-<!-- Using two wells for regularizing the network we get
-- for 3 shots, 400 iterations, learning rate scheduler for halving the lr at every 50 iterations for $\lambda = 1\times 10^{-6}$
-![res](/readme_files/results_3shots_400_lrsc50_l6.png)
-with estimate velocity at wells as
-![res_well](/readme_files/wells_3shots_400_lrsc50_l6.png)
-and error of 
-![err](/readme_files/err_3shots_400_lrsc50_l6.png)
--->
 
 Reference:
 ```
-@article{
-Physics-guided deep autoencoder to overcome the need for a starting model in full-waveform inversion
-Dhara, Arnab and Mrinal K. Sen
-The Leading Edge (2022),41(6): 375
-https://doi.org/10.1190/tle41060375.1
-```
-
-To cite this repository, please use the following BibTex entry,
-```
-@misc{Mardan2023pinnfwi,
-  author = {Mardan, Amir},
-  title = {Physics-informed full-waveform inversion},
-  year = {2023},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-    howpublished = {\url{https://github.com/AmirMardan/pinn_fwi}},
-  doi = {10.5281/zenodo.10206532},
-  release = {0.1.0}
+@inproceedings{mardan2024piann_eage,
+	title = {Physics-informed attention-based neural networks for full-waveform inversion},
+  	author = {Mardan, Amir and Fabien-Ouellet, Gabriel},
+  	year = {2024},
+  	booktitle = {85$^{th}$ {EAGE} Annual Conference \& Exhibition},
+	publisher = {European Association of Geoscientists \& Engineers},
+	pages = {1-5},
+  	doi = {}
 }
-```
+``` 
