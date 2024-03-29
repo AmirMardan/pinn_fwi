@@ -1,5 +1,13 @@
 PIANN-FWI for estimating the Marmousi velocity model
-===================================================
+====================================================
+
+.. figure:: /readme_files/25231.png
+   :width: 20
+   :alt: git
+   :target: https://github.com/AmirMardan/pinn_fwi
+
+
+This is preliminary documentation for Physics-Informed Neural Networks for Full-Waveform Inversion (PINN-FWI)
 
 In this repository, I implemented the physics-informed neural network
 (PINN) for full-waveform inversion. This PINN can be implemented with or
@@ -41,20 +49,6 @@ Marmousi model is shown in the following figures.
 |res| For a faster convergence (300 epochs), I considered geophones
 around the model and the results are |with_init| where the hybrid method
 is using the PIANN-FWI for creating only initial model.
-
-Reference:
-
-::
-
-   @inproceedings{mardan2024piann_eage,
-       title = {Physics-informed attention-based neural networks for full-waveform inversion},
-       author = {Mardan, Amir and Fabien-Ouellet, Gabriel},
-       year = {2024},
-       booktitle = {85$^{th}$ {EAGE} Annual Conference \& Exhibition},
-       publisher = {European Association of Geoscientists \& Engineers},
-       pages = {1-5},
-       doi = {}
-   }
 
 .. |res| image:: /readme_files/marmousi_clean.png
 .. |with_init| image:: /readme_files/image2024_marmousi_clean.png
