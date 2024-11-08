@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Physics-Guided Neural Networks for Full-Waveform Inversion (PGNN-FWI) &mdash; PGNN-FWI 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PGANN-FWI for estimating the Marmousi velocity model" href="source/readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> PGNN-FWI
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                am
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">PGNN-FWI</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/readme.html">PGANN-FWI for estimating the Marmousi velocity model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/tools.html">tools module</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">PGNN-FWI</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Physics-Guided Neural Networks for Full-Waveform Inversion (PGNN-FWI)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/amirmardan/pgnn_fwi/blob/main/docs/index.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="physics-guided-neural-networks-for-full-waveform-inversion-pgnn-fwi">
+<h1>Physics-Guided Neural Networks for Full-Waveform Inversion (PGNN-FWI)<a class="headerlink" href="#physics-guided-neural-networks-for-full-waveform-inversion-pgnn-fwi" title="Permalink to this heading">¶</a></h1>
+</section>
+<section id="pgnn-fwi">
+<h1>PGNN-FWI<a class="headerlink" href="#pgnn-fwi" title="Permalink to this heading">¶</a></h1>
+<figure class="align-default">
+<a class="reference external image-reference" href="https://github.com/AmirMardan/pinn_fwi"><img alt="git" src="_images/25231.png" style="width: 20px;" /></a>
+</figure>
+<p>..caption::
+This is preliminary documentation for Physics-Guided Neural Networks for Full-Waveform Inversion (PGNN-FWI)</p>
+<p>In this repository, I implemented the physics-guided neural network
+(PGNN) for full-waveform inversion. This PGNN can be implemented with or
+without attention block. The architecture of their study is shown in the
+following figure.</p>
+<figure class="align-default">
+<img alt="architecture" src="_images/architecture.png" />
+</figure>
+<p>For running the code, you should use this
+<a class="reference external" href="https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.ipynb">notebook</a>.
+The required parameters for running this notebook should be set in this
+<a class="reference external" href="https://github.com/AmirMardan/pinn_fwi/blob/main/config.py">config</a>
+file.</p>
+<p>Note: I have commented cell 3 in this notebook, you should run this cell
+whenever you change an acquisition parameter (and for the first time
+using the codes).</p>
+<p>Note: Please use the
+<a class="reference external" href="https://github.com/AmirMardan/pinn_fwi/blob/main/requirements.txt">requirements</a>
+file (written in the jupyter file) to install the packages with
+specified versions to be sure everything works.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install -r requirements.txt</span>
+</pre></div>
+</div>
+<dl>
+<dt><strong>In this repo, there are four scripts for running FWI:</strong></dt><dd><div class="line-block">
+<div class="line">1. <a class="reference external" href="https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.py">pinn_fwi.py</a> for performing PGNN- or PGANN-FWI.</div>
+<div class="line">2. <a class="reference external" href="https://github.com/AmirMardan/pinn_fwi/blob/main/original_fwi.py">original_fwi.py</a> for running the conventional FWI (Not available).</div>
+<div class="line">3. <a class="reference external" href="https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_for_init.py">pinn_for_init.py</a> for performing PGNN- or PGANN-FWI to create an initial model and use that to perform the conventional FWI (Not available).</div>
+<div class="line">4. <a class="reference external" href="https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.ipynb">pinn_fwi.ipynb</a> for performing PGNN- or PGANN-FWI, but this notebook might not be updated.</div>
+</div>
+</dd>
+</dl>
+<p>The result of running this code for 22 shots with 2500 epochs on the
+Marmousi model is shown in the following figures.</p>
+<p><img alt="res" src="_images/marmousi_clean.png" /> For a faster convergence (300 epochs), I considered geophones
+around the model and the results are <img alt="with_init" src="_images/image2024_marmousi_clean.png" /> where the hybrid method
+is using the PIANN-FWI for creating only initial model.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">PGNN-FWI</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/readme.html">PGANN-FWI for estimating the Marmousi velocity model</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Tools</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="source/tools.html">tools module</a></li>
+</ul>
+</div>
+<section id="references">
+<h2>References:<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>@inproceedings{mardan2024pgann_eage,
+    title = {Physics-guided attention-based neural networks for full-waveform inversion},
+    author = {Mardan, Amir and Fabien-Ouellet, Gabriel},
+    year = {2024},
+    booktitle = {85$^{th}$ {EAGE} Annual Conference \&amp; Exhibition},
+    publisher = {European Association of Geoscientists \&amp; Engineers},
+    pages = {1-5},
+    doi = {}
+    }
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="source/readme.html" class="btn btn-neutral float-right" title="PGANN-FWI for estimating the Marmousi velocity model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2024, Amir Mardan
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
