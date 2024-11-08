@@ -1,12 +1,12 @@
-.. PINN-FWI documentation master file, created by
+.. PGNN-FWI documentation master file, created by
    sphinx-quickstart on Thu Mar 28 00:06:12 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-PIhysics-Informed Neural Networks for Full-Waveform Inversion (PINN-FWI)
+Physics-Guided Neural Networks for Full-Waveform Inversion (PGNN-FWI)
 ========================================================================
 
-PINN-FWI
+PGNN-FWI
 =========
 
 .. figure:: /readme_files/25231.png
@@ -15,10 +15,10 @@ PINN-FWI
    :target: https://github.com/AmirMardan/pinn_fwi
 
 ..caption::
-This is preliminary documentation for Physics-Informed Neural Networks for Full-Waveform Inversion (PINN-FWI)
+This is preliminary documentation for Physics-Guided Neural Networks for Full-Waveform Inversion (PGNN-FWI)
 
-In this repository, I implemented the physics-informed neural network
-(PINN) for full-waveform inversion. This PINN can be implemented with or
+In this repository, I implemented the physics-guided neural network
+(PGNN) for full-waveform inversion. This PGNN can be implemented with or
 without attention block. The architecture of their study is shown in the
 following figure.
 
@@ -46,10 +46,10 @@ specified versions to be sure everything works.
    pip install -r requirements.txt
 
 **In this repo, there are four scripts for running FWI:** 
- | 1. `pinn_fwi.py <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.py>`__ for performing PINN- or PIANN-FWI. 
+ | 1. `pinn_fwi.py <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.py>`__ for performing PGNN- or PGANN-FWI. 
  | 2. `original_fwi.py <https://github.com/AmirMardan/pinn_fwi/blob/main/original_fwi.py>`__ for running the conventional FWI (Not available). 
- | 3. `pinn_for_init.py <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_for_init.py>`__ for performing PINN- or PIANN-FWI to create an initial model and use that to perform the conventional FWI (Not available). 
- | 4. `pinn_fwi.ipynb <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.ipynb>`__ for performing PINN- or PIANN-FWI, but this notebook might not be updated.
+ | 3. `pinn_for_init.py <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_for_init.py>`__ for performing PGNN- or PGANN-FWI to create an initial model and use that to perform the conventional FWI (Not available). 
+ | 4. `pinn_fwi.ipynb <https://github.com/AmirMardan/pinn_fwi/blob/main/pinn_fwi.ipynb>`__ for performing PGNN- or PGANN-FWI, but this notebook might not be updated.
 
 The result of running this code for 22 shots with 2500 epochs on the
 Marmousi model is shown in the following figures.
@@ -63,7 +63,7 @@ is using the PIANN-FWI for creating only initial model.
 
 .. toctree::
    :maxdepth: 1
-   :caption: PINN-FWI
+   :caption: PGNN-FWI
 
    source/readme
 
@@ -78,8 +78,8 @@ References:
 
 ::
 
-    @inproceedings{mardan2024piann_eage,
-        title = {Physics-informed attention-based neural networks for full-waveform inversion},
+    @inproceedings{mardan2024pgann_eage,
+        title = {Physics-guided attention-based neural networks for full-waveform inversion},
         author = {Mardan, Amir and Fabien-Ouellet, Gabriel},
         year = {2024},
         booktitle = {85$^{th}$ {EAGE} Annual Conference \& Exhibition},

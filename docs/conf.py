@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 # don't forget to change html_context['github_repo'] in bottom of this file
-project = 'PINN-FWI'
+project = 'PGNN-FWI'
 copyright = '2023, Amir Mardan'
 author = 'Amir Mardan'
 release = '0.1.0'
@@ -133,6 +133,6 @@ html_context['downloads'].append( ('epub', '/' +REPO_NAME+ '/' +current_language
  
 html_context['display_github'] = True
 html_context['github_user'] = 'amirmardan'
-html_context['github_repo'] = 'pinn_fwi'
+html_context['github_repo'] = 'pgnn_fwi'
 html_context['github_version'] = 'main/docs/'
  
